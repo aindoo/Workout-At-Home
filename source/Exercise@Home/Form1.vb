@@ -69,7 +69,7 @@ Public Class Form1
 
                 Else
                     Dim di As DirectoryInfo = Directory.CreateDirectory(workoutdb.FullName & "/back")
-                    Dim sourcefilesdir = Directory.GetCurrentDirectory() & "/backs"
+                    Dim sourcefilesdir = Directory.GetCurrentDirectory() & "/back"
 
                     Dim dir As New IO.DirectoryInfo(sourcefilesdir)
                     Dim files As IO.FileInfo() = dir.GetFiles()
