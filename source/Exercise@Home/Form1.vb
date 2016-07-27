@@ -184,6 +184,14 @@ Public Class Form1
             Panel2.Top = Me.Height / 2 - Panel2.Height / 2
             Panel2.Left = Me.Width / 2 - Panel2.Width / 2
             Panel2.Visible = True
+
+            Button1.Left = Me.Width - Button1.Width - 30
+            Panel3.Left = Button4.Left + (Button1.Left - Button4.Left) / 2 + Button4.Width / 2 - Panel3.Width / 2
+            ProgressBar1.Width = Me.Width - ProgressBar1.Left - 30
+            Panel1.Width = Me.Width - Panel1.Left - 30
+            PictureBox1.Width = Me.Width - PictureBox1.Left - 30
+            Panel1.Height = Me.Height - Panel1.Top - 30
+            PictureBox1.Height = Me.Height - PictureBox1.Top - 30
         End If
 
     End Sub
