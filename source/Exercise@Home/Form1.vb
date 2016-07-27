@@ -2,7 +2,9 @@
 
 
 Public Class Form1
-    Dim workoutdbdir
+    Public workoutdbdir
+    Public preferencefi As New IO.FileInfo(Directory.GetCurrentDirectory() & "/pref.inf")
+
     Dim setduration
     Dim restduration
     Dim remainingduration
@@ -11,84 +13,17 @@ Public Class Form1
 
 
     Private Function checknewuser()
-        Dim preferencefi As New IO.FileInfo(Directory.GetCurrentDirectory() & "/pref.inf")
         If preferencefi.Exists Then
 
             Dim fileReader As System.IO.StreamReader
             fileReader = My.Computer.FileSystem.OpenTextFileReader(preferencefi.FullName)
             workoutdbdir = fileReader.ReadLine
-
+            Return 1
         Else
-            MessageBox.Show("Looks like you're using this program for the first time. Let's set things up real quick.")
-            Dim fileDlg As New FolderBrowserDialog
-            fileDlg.Description = "Choose directory to save/add workout animations"
-            If (fileDlg.ShowDialog() = DialogResult.OK) Then
-                Dim workoutdb As New IO.DirectoryInfo(fileDlg.SelectedPath)
-
-                If Directory.Exists(workoutdb.FullName & "/abs") Then
-
-                Else
-                    Dim di As DirectoryInfo = Directory.CreateDirectory(workoutdb.FullName & "/abs")
-                    Dim sourcefilesdir = Directory.GetCurrentDirectory() & "/abs"
-
-                    Dim dir As New IO.DirectoryInfo(sourcefilesdir)
-                    Dim files As IO.FileInfo() = dir.GetFiles()
-                    For Each file In files
-                        file.CopyTo(di.FullName & "/" & file.Name)
-                    Next
-
-
-                End If
-                If Directory.Exists(workoutdb.FullName & "/arms") Then
-
-                Else
-                    Dim di As DirectoryInfo = Directory.CreateDirectory(workoutdb.FullName & "/arms")
-                    Dim sourcefilesdir = Directory.GetCurrentDirectory() & "/arms"
-
-                    Dim dir As New IO.DirectoryInfo(sourcefilesdir)
-                    Dim files As IO.FileInfo() = dir.GetFiles()
-                    For Each file In files
-                        file.CopyTo(di.FullName & "/" & file.Name)
-                    Next
-
-                End If
-                If Directory.Exists(workoutdb.FullName & "/legs") Then
-
-                Else
-                    Dim di As DirectoryInfo = Directory.CreateDirectory(workoutdb.FullName & "/legs")
-                    Dim sourcefilesdir = Directory.GetCurrentDirectory() & "/legs"
-
-                    Dim dir As New IO.DirectoryInfo(sourcefilesdir)
-                    Dim files As IO.FileInfo() = dir.GetFiles()
-                    For Each file In files
-                        file.CopyTo(di.FullName & "/" & file.Name)
-                    Next
-
-                End If
-                If Directory.Exists(workoutdb.FullName & "/back") Then
-
-                Else
-                    Dim di As DirectoryInfo = Directory.CreateDirectory(workoutdb.FullName & "/back")
-                    Dim sourcefilesdir = Directory.GetCurrentDirectory() & "/back"
-
-                    Dim dir As New IO.DirectoryInfo(sourcefilesdir)
-                    Dim files As IO.FileInfo() = dir.GetFiles()
-                    For Each file In files
-                        file.CopyTo(di.FullName & "/" & file.Name)
-                    Next
-
-                End If
-
-
-                Dim objWriter As New System.IO.StreamWriter(preferencefi.FullName, False)
-
-                objWriter.WriteLine(fileDlg.SelectedPath)
-                objWriter.Close()
-                MessageBox.Show("Workout Database Populated @ " & fileDlg.SelectedPath)
-                workoutdbdir = fileDlg.SelectedPath
-            End If
-
+            Return 0
         End If
+
+
 
     End Function
 
@@ -104,6 +39,17 @@ Public Class Form1
         ListBox3.Items.Clear()
         ListBox4.Items.Clear()
         ListBox5.Items.Clear()
+        Label12.Visible = False
+
+        Dim loadmenuitem As New ToolStripMenuItem
+        Dim newmenuitem As New ToolStripMenuItem
+        loadmenuitem.Text = workoutdbdir
+        newmenuitem.Text = "Change directory"
+        WorkoutDatabaseToolStripMenuItem.DropDownItems.Add(loadmenuitem)
+
+
+
+
 
         Dim dra As IO.FileInfo
 
@@ -129,16 +75,119 @@ Public Class Form1
         For Each dra In back1
             ListBox4.Items.Add(dra)
         Next
-
+        populaterecentlist()
     End Function
 
-    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Function newrecentitem(fpath)
+        Dim recentlistfile As New IO.FileInfo(Directory.GetCurrentDirectory() & "/recent.inf")
+        Dim objWriter As New System.IO.StreamWriter(recentlistfile.FullName + "_temp", False)
+        Dim stringreader = File.ReadAllText(recentlistfile.FullName)
 
-        checknewuser()
-        initialize()
+        objWriter.WriteLine(fpath)
 
+        Dim parts As String() = stringreader.Split(New String() {Environment.NewLine},
+                           StringSplitOptions.None)
+
+        For i = 0 To parts.Count - 1
+            If parts(i) <> fpath And i < 10 Then
+                objWriter.WriteLine(parts(i))
+            End If
+        Next
+
+        objWriter.Close()
+
+        populaterecentlist()
+    End Function
+
+    Private Function populaterecentlist()
+        RecentWorkoutsToolStripMenuItem.DropDownItems.Clear()
+        Dim recentlistfile As New IO.FileInfo(Directory.GetCurrentDirectory() & "/recent.inf")
+
+
+        If recentlistfile.Exists = False Then
+            Dim objWriter As New System.IO.StreamWriter(recentlistfile.FullName, True)
+            objWriter.Close()
+        Else
+            Try
+                recentlistfile.Delete()
+                File.Copy(recentlistfile.FullName + "_temp", recentlistfile.FullName)
+
+            Catch ex As Exception
+            End Try
+
+            Dim fileReader As System.IO.StreamReader
+            fileReader = My.Computer.FileSystem.OpenTextFileReader(recentlistfile.FullName)
+            Dim stringReader As String = fileReader.ReadToEnd
+            Dim parts As String() = stringReader.Split(New String() {Environment.NewLine},
+                                       StringSplitOptions.None)
+            For i = 0 To parts.Count - 1
+                If parts(i) <> "" Then
+
+                    Dim newrecentfile As New IO.FileInfo(parts(i))
+                    Dim newrecentitem As New ToolStripMenuItem
+                    newrecentitem.Text = newrecentfile.FullName
+
+                    AddHandler newrecentitem.Click, AddressOf ItemClicked
+                    RecentWorkoutsToolStripMenuItem.DropDownItems.Add(newrecentitem)
+
+                End If
+            Next
+
+        End If
+    End Function
+
+    Private Sub ItemClicked(ByVal sender As Object, ByVal e As EventArgs)
+        Dim filedir As String = sender.text
+        loadworkout(filedir)
 
     End Sub
+    Private Sub loadworkout(workoutfile)
+        ListBox5.Items.Clear()
+        Dim file As New IO.FileInfo(workoutfile)
+        Dim fileReader As System.IO.StreamReader
+        fileReader = My.Computer.FileSystem.OpenTextFileReader(file.FullName)
+        Dim stringReader As String = fileReader.ReadToEnd
+        Dim parts As String() = stringReader.Split(New String() {Environment.NewLine},
+                                   StringSplitOptions.None)
+
+        Dim setdurationmm = Math.Sign(parts(0) / 60) * Math.Floor(Math.Abs(parts(0) / 60))
+        Dim setdurationss = parts(0) - setdurationmm * 60
+        TextBox1.Text = setdurationmm
+        TextBox2.Text = setdurationss
+
+        Dim restdurationmm = Math.Sign(parts(1) / 60) * Math.Floor(Math.Abs(parts(1) / 60))
+        Dim restdurationss = parts(1) - restdurationmm * 60
+        TextBox3.Text = restdurationmm
+        TextBox4.Text = restdurationss
+
+
+        For i = 2 To parts.Count - 2
+            Dim dd As New IO.FileInfo(parts(i))
+
+            ListBox5.Items.Add(dd)
+        Next
+        ListBox5.DisplayMember = "Name"
+
+        newrecentitem(file.FullName)
+
+        Me.Text = "WO@H - " & file.Name
+        Label10.Text = "Workout List: " & file.Name
+    End Sub
+
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Text = "WO@H"
+        If (checknewuser() = 1) Then
+            initialize()
+        Else
+            Panel2.Width = Me.Width
+            Panel2.Height = Me.Height
+            Panel2.Top = Me.Height / 2 - Panel2.Height / 2
+            Panel2.Left = Me.Width / 2 - Panel2.Width / 2
+            Panel2.Visible = True
+        End If
+
+    End Sub
+
 
 
 
@@ -200,6 +249,11 @@ Public Class Form1
                 TextBox4.Text = "15"
             End If
 
+            If (ListBox5.Items.Count = 0) Then
+                MessageBox.Show("Please add at least one exercise to the workout set")
+                Return
+            End If
+
             setduration = TextBox1.Text * 60 + TextBox2.Text
             restduration = TextBox3.Text * 60 + TextBox4.Text
             remainingduration = setduration
@@ -207,6 +261,9 @@ Public Class Form1
             ProgressBar1.Maximum = setduration
             currentindex = 0
             PictureBox1.ImageLocation = ListBox5.Items.Item(currentindex).FullName
+            ListBox5.SelectedIndex = currentindex
+            My.Computer.Audio.Play(Directory.GetCurrentDirectory() & "\begin.wav", _
+        AudioPlayMode.Background)
             Timer1.Enabled = True
             Dim totalworkoutduration = setduration * ListBox5.Items.Count + restduration * (ListBox5.Items.Count - 1)
             Dim totalworkoutdurationmm = Math.Sign(totalworkoutduration / 60) * Math.Floor(Math.Abs(totalworkoutduration / 60))
@@ -214,6 +271,8 @@ Public Class Form1
             Label11.Text = "Total Workout Duration= " & totalworkoutdurationmm & " min" & totalworkoutdurationss & " sec"
             Button1.Text = "Pause Workout"
         ElseIf (Button1.Text = "Pause Workout") Then
+            My.Computer.Audio.Play(Directory.GetCurrentDirectory() & "\end.wav", _
+        AudioPlayMode.Background)
             Timer1.Enabled = False
             Timer2.Enabled = False
             Button1.Text = "Resume Workout"
@@ -224,7 +283,8 @@ Public Class Form1
             Else
                 Timer1.Enabled = True
             End If
-            Beep()
+            My.Computer.Audio.Play(Directory.GetCurrentDirectory() & "\begin.wav", _
+        AudioPlayMode.Background)
             Button1.Text = "Pause Workout"
         End If
 
@@ -240,17 +300,23 @@ Public Class Form1
             Label7.Text = remainingmin
             Label8.Text = remainingsec
             status = "active"
+            Label12.Visible = False
         Else
-            Beep()
+            My.Computer.Audio.Play(Directory.GetCurrentDirectory() & "\end.wav", _
+        AudioPlayMode.Background)
             Timer1.Enabled = False
             remainingduration = restduration
             status = "rest"
+            Label12.Visible = True
             If (currentindex + 1 < ListBox5.Items.Count) Then
                 currentindex = currentindex + 1
                 PictureBox1.ImageLocation = ListBox5.Items.Item(currentindex).FullName
+                ListBox5.SelectedIndex = currentindex
                 Timer2.Enabled = True
             Else
                 MessageBox.Show("WORKOUT COMPLETE!!!")
+                My.Computer.Audio.Play(Directory.GetCurrentDirectory() & "\end.wav", _
+        AudioPlayMode.Background)
                 Button1.Text = "Begin Workout"
             End If
         End If
@@ -269,12 +335,32 @@ Public Class Form1
             Timer2.Enabled = False
             remainingduration = setduration
             Timer1.Enabled = True
+            My.Computer.Audio.Play(Directory.GetCurrentDirectory() & "\begin.wav", _
+        AudioPlayMode.Background)
         End If
 
     End Sub
 
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+
+        If (TextBox1.Text = "" Or TextBox1.Text = "mm") Then
+            TextBox1.Text = "00"
+        End If
+        If (TextBox2.Text = "" Or TextBox2.Text = "ss") Then
+            TextBox2.Text = "60"
+        End If
+        If (TextBox3.Text = "" Or TextBox3.Text = "mm") Then
+            TextBox3.Text = "00"
+        End If
+        If (TextBox4.Text = "" Or TextBox4.Text = "ss") Then
+            TextBox4.Text = "15"
+        End If
+
+        If (ListBox5.Items.Count = 0) Then
+            MessageBox.Show("Please add at least one exercise to the workout set")
+            Return
+        End If
 
         setduration = TextBox1.Text * 60 + TextBox2.Text
         restduration = TextBox3.Text * 60 + TextBox4.Text
@@ -298,6 +384,9 @@ Public Class Form1
             Next
             objWriter.Close()
             MessageBox.Show("Workout Saved")
+
+            newrecentitem(workoutfile)
+
         Else
             MessageBox.Show("Failed to save workout. Please try again.")
         End If
@@ -305,7 +394,7 @@ Public Class Form1
     End Sub
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
-        ListBox5.Items.Clear()
+
         Dim fileDlg As New OpenFileDialog
         fileDlg.RestoreDirectory = True
         fileDlg.Filter = "MSL File | *.msl"
@@ -313,32 +402,7 @@ Public Class Form1
 
         If (fileDlg.ShowDialog() = DialogResult.OK) Then
             Dim workoutfile = fileDlg.FileName
-
-            Dim fileReader As System.IO.StreamReader
-            fileReader = My.Computer.FileSystem.OpenTextFileReader(workoutfile)
-            Dim stringReader As String = fileReader.ReadToEnd
-            Dim parts As String() = stringReader.Split(New String() {Environment.NewLine},
-                                       StringSplitOptions.None)
-
-            Dim setdurationmm = Math.Sign(parts(0) / 60) * Math.Floor(Math.Abs(parts(0) / 60))
-            Dim setdurationss = parts(0) - setdurationmm * 60
-            TextBox1.Text = setdurationmm
-            TextBox2.Text = setdurationss
-
-            Dim restdurationmm = Math.Sign(parts(1) / 60) * Math.Floor(Math.Abs(parts(1) / 60))
-            Dim restdurationss = parts(1) - restdurationmm * 60
-            TextBox3.Text = restdurationmm
-            TextBox4.Text = restdurationss
-
-
-            For i = 2 To parts.Count - 2
-                Dim dd As New IO.FileInfo(parts(i))
-
-                ListBox5.Items.Add(dd)
-            Next
-            ListBox5.DisplayMember = "Name"
-
-            MessageBox.Show("Workout Loaded")
+            loadworkout(workoutfile)
         Else
             MessageBox.Show("Failed to load workout. Please try again.")
         End If
@@ -368,7 +432,137 @@ Public Class Form1
         TextBox4.Text = ""
     End Sub
 
-    Private Sub WorkoutDatabaseToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles WorkoutDatabaseToolStripMenuItem.Click
+
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
+        If (ListBox5.SelectedIndex >= 0) Then
+
+            Dim selectedindex = ListBox5.SelectedIndex
+            Dim selecteditem = ListBox5.Items(selectedindex)
+            Dim previousindex, nextindex
+
+            If (selectedindex <> 0) Then
+                previousindex = selectedindex - 1
+            End If
+            If (selectedindex <> ListBox5.Items.Count - 1) Then
+                nextindex = selectedindex + 1
+            End If
+
+            ListBox5.Items(selectedindex) = ListBox5.Items(previousindex)
+            ListBox5.Items(previousindex) = selecteditem
+            ListBox5.SelectedIndex = previousindex
+
+        End If
+    End Sub
+
+    Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click
+        If (ListBox5.SelectedIndex >= 0) Then
+
+            Dim selectedindex = ListBox5.SelectedIndex
+            Dim selecteditem = ListBox5.Items(selectedindex)
+            Dim previousindex, nextindex
+
+            If (selectedindex <> 0) Then
+                previousindex = selectedindex - 1
+            End If
+            If (selectedindex <> ListBox5.Items.Count - 1) Then
+                nextindex = selectedindex + 1
+            Else
+                nextindex = ListBox5.Items.Count - 1
+            End If
+
+            ListBox5.Items(selectedindex) = ListBox5.Items(nextindex)
+            ListBox5.Items(nextindex) = selecteditem
+            ListBox5.SelectedIndex = nextindex
+
+        End If
+    End Sub
+
+    Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
+        Dim fileDlg As New FolderBrowserDialog
+        fileDlg.Description = "Choose directory to save/add workout animations"
+        If (fileDlg.ShowDialog() = DialogResult.OK) Then
+            TextBox5.Text = fileDlg.SelectedPath
+        End If
+
+    End Sub
+
+    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
+        ProgressBar2.Maximum = 200
+        ProgressBar2.Minimum = 0
+        ProgressBar2.Value = 0
+
+        Dim workoutdb As New IO.DirectoryInfo(TextBox5.Text)
+
+        If Directory.Exists(workoutdb.FullName & "/abs") Then
+
+        Else
+            Dim di As DirectoryInfo = Directory.CreateDirectory(workoutdb.FullName & "/abs")
+            Dim sourcefilesdir = Directory.GetCurrentDirectory() & "/abs"
+
+            Dim dir As New IO.DirectoryInfo(sourcefilesdir)
+            Dim files As IO.FileInfo() = dir.GetFiles()
+            For Each file In files
+                file.CopyTo(di.FullName & "/" & file.Name)
+                ProgressBar2.Value = ProgressBar2.Value + 1
+            Next
+
+
+        End If
+        If Directory.Exists(workoutdb.FullName & "/arms") Then
+
+        Else
+            Dim di As DirectoryInfo = Directory.CreateDirectory(workoutdb.FullName & "/arms")
+            Dim sourcefilesdir = Directory.GetCurrentDirectory() & "/arms"
+
+            Dim dir As New IO.DirectoryInfo(sourcefilesdir)
+            Dim files As IO.FileInfo() = dir.GetFiles()
+            For Each file In files
+                file.CopyTo(di.FullName & "/" & file.Name)
+                ProgressBar2.Value = ProgressBar2.Value + 1
+            Next
+
+        End If
+        If Directory.Exists(workoutdb.FullName & "/legs") Then
+
+        Else
+            Dim di As DirectoryInfo = Directory.CreateDirectory(workoutdb.FullName & "/legs")
+            Dim sourcefilesdir = Directory.GetCurrentDirectory() & "/legs"
+
+            Dim dir As New IO.DirectoryInfo(sourcefilesdir)
+            Dim files As IO.FileInfo() = dir.GetFiles()
+            For Each file In files
+                file.CopyTo(di.FullName & "/" & file.Name)
+                ProgressBar2.Value = ProgressBar2.Value + 1
+            Next
+
+        End If
+        If Directory.Exists(workoutdb.FullName & "/back") Then
+
+        Else
+            Dim di As DirectoryInfo = Directory.CreateDirectory(workoutdb.FullName & "/back")
+            Dim sourcefilesdir = Directory.GetCurrentDirectory() & "/back"
+
+            Dim dir As New IO.DirectoryInfo(sourcefilesdir)
+            Dim files As IO.FileInfo() = dir.GetFiles()
+            For Each file In files
+                file.CopyTo(di.FullName & "/" & file.Name)
+                ProgressBar2.Value = ProgressBar2.Value + 1
+            Next
+
+        End If
+
+        ProgressBar2.Value = ProgressBar2.Maximum
+        Dim objWriter As New System.IO.StreamWriter(preferencefi.FullName, False)
+
+        objWriter.WriteLine(workoutdb.FullName)
+        objWriter.Close()
+        workoutdbdir = workoutdb.FullName
+        initialize()
+        Panel2.Visible = False
+
+    End Sub
+
+    Private Sub ChangeDirectoryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ChangeDirectoryToolStripMenuItem.Click
         Dim fileDlg As New FolderBrowserDialog
         If (fileDlg.ShowDialog() = DialogResult.OK) Then
             Dim workoutdb As New IO.DirectoryInfo(fileDlg.SelectedPath)
@@ -434,10 +628,22 @@ Public Class Form1
             objWriter.WriteLine(fileDlg.SelectedPath)
             objWriter.Close()
             workoutdbdir = fileDlg.SelectedPath
+            WorkoutDatabaseToolStripMenuItem.DropDownItems.RemoveAt(1)
             initialize()
+
             MessageBox.Show("Workout Database Selected")
 
         End If
+    End Sub
+
+    Private Sub Form1_Resize(sender As Object, e As EventArgs) Handles Me.Resize
+        Button1.Left = Me.Width - Button1.Width - 30
+        Panel3.Left = Button4.Left + (Button1.Left - Button4.Left) / 2 + Button4.Width / 2 - Panel3.Width / 2
+        ProgressBar1.Width = Me.Width - ProgressBar1.Left - 30
+        Panel1.Width = Me.Width - Panel1.Left - 30
+        PictureBox1.Width = Me.Width - PictureBox1.Left - 30
+        Panel1.Height = Me.Height - Panel1.Top - 30
+        PictureBox1.Height = Me.Height - PictureBox1.Top - 30
     End Sub
 End Class
 

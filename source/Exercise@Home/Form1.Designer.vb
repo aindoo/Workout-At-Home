@@ -37,6 +37,7 @@ Partial Class Form1
         Me.setlist = New System.Windows.Forms.ImageList(Me.components)
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Label12 = New System.Windows.Forms.Label()
         Me.ListBox5 = New System.Windows.Forms.ListBox()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label10 = New System.Windows.Forms.Label()
@@ -66,6 +67,18 @@ Partial Class Form1
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.PreferencesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.WorkoutDatabaseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ChangeDirectoryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.RecentWorkoutsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.Button5 = New System.Windows.Forms.Button()
+        Me.Button6 = New System.Windows.Forms.Button()
+        Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.ProgressBar2 = New System.Windows.Forms.ProgressBar()
+        Me.Button7 = New System.Windows.Forms.Button()
+        Me.TextBox5 = New System.Windows.Forms.TextBox()
+        Me.Button8 = New System.Windows.Forms.Button()
+        Me.Label13 = New System.Windows.Forms.Label()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.Panel3 = New System.Windows.Forms.Panel()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
         Me.TabControl1.SuspendLayout()
@@ -74,11 +87,13 @@ Partial Class Form1
         Me.TabPage3.SuspendLayout()
         Me.TabPage4.SuspendLayout()
         Me.MenuStrip1.SuspendLayout()
+        Me.Panel2.SuspendLayout()
+        Me.Panel3.SuspendLayout()
         Me.SuspendLayout()
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(763, 44)
+        Me.Button1.Location = New System.Drawing.Point(793, 33)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(78, 71)
         Me.Button1.TabIndex = 0
@@ -89,7 +104,7 @@ Partial Class Form1
         '
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 60.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(459, 35)
+        Me.Label7.Location = New System.Drawing.Point(20, 13)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(129, 91)
         Me.Label7.TabIndex = 11
@@ -100,7 +115,7 @@ Partial Class Form1
         '
         Me.Label8.AutoSize = True
         Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 60.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(603, 35)
+        Me.Label8.Location = New System.Drawing.Point(164, 13)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(129, 91)
         Me.Label8.TabIndex = 12
@@ -110,7 +125,7 @@ Partial Class Form1
         '
         Me.Label9.AutoSize = True
         Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 60.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.Location = New System.Drawing.Point(567, 28)
+        Me.Label9.Location = New System.Drawing.Point(128, 6)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(62, 91)
         Me.Label9.TabIndex = 13
@@ -241,33 +256,46 @@ Partial Class Form1
         'PictureBox1
         '
         Me.PictureBox1.Image = Global.Exercise_Home.My.Resources.Resources.burpee_clean_pushup_press
-        Me.PictureBox1.Location = New System.Drawing.Point(0, -45)
+        Me.PictureBox1.Location = New System.Drawing.Point(0, -166)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(476, 511)
+        Me.PictureBox1.Size = New System.Drawing.Size(961, 634)
+        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.PictureBox1.TabIndex = 15
         Me.PictureBox1.TabStop = False
         '
         'Panel1
         '
+        Me.Panel1.Controls.Add(Me.Label12)
         Me.Panel1.Controls.Add(Me.PictureBox1)
-        Me.Panel1.Location = New System.Drawing.Point(365, 145)
+        Me.Panel1.Location = New System.Drawing.Point(395, 134)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(479, 468)
         Me.Panel1.TabIndex = 19
+        '
+        'Label12
+        '
+        Me.Label12.AutoSize = True
+        Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 48.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label12.Location = New System.Drawing.Point(5, 7)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(168, 73)
+        Me.Label12.TabIndex = 60
+        Me.Label12.Text = "Rest"
+        Me.Label12.Visible = False
         '
         'ListBox5
         '
         Me.ListBox5.AllowDrop = True
         Me.ListBox5.FormattingEnabled = True
-        Me.ListBox5.Location = New System.Drawing.Point(207, 66)
+        Me.ListBox5.Location = New System.Drawing.Point(207, 49)
         Me.ListBox5.Name = "ListBox5"
-        Me.ListBox5.Size = New System.Drawing.Size(148, 290)
+        Me.ListBox5.Size = New System.Drawing.Size(148, 420)
         Me.ListBox5.TabIndex = 52
         '
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(64, 376)
+        Me.Label5.Location = New System.Drawing.Point(55, 491)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(64, 13)
         Me.Label5.TabIndex = 47
@@ -276,16 +304,16 @@ Partial Class Form1
         'Label10
         '
         Me.Label10.AutoSize = True
-        Me.Label10.Location = New System.Drawing.Point(216, 50)
+        Me.Label10.Location = New System.Drawing.Point(206, 33)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(100, 13)
+        Me.Label10.Size = New System.Drawing.Size(70, 13)
         Me.Label10.TabIndex = 50
-        Me.Label10.Text = "Selected Exercises:"
+        Me.Label10.Text = "Workout List:"
         '
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(58, 401)
+        Me.Label6.Location = New System.Drawing.Point(49, 516)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(70, 13)
         Me.Label6.TabIndex = 48
@@ -293,7 +321,7 @@ Partial Class Form1
         '
         'TextBox1
         '
-        Me.TextBox1.Location = New System.Drawing.Point(145, 369)
+        Me.TextBox1.Location = New System.Drawing.Point(136, 484)
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.Size = New System.Drawing.Size(53, 20)
         Me.TextBox1.TabIndex = 39
@@ -305,10 +333,10 @@ Partial Class Form1
         Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Controls.Add(Me.TabPage3)
         Me.TabControl1.Controls.Add(Me.TabPage4)
-        Me.TabControl1.Location = New System.Drawing.Point(9, 44)
+        Me.TabControl1.Location = New System.Drawing.Point(9, 27)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(191, 313)
+        Me.TabControl1.Size = New System.Drawing.Size(191, 442)
         Me.TabControl1.TabIndex = 49
         '
         'TabPage2
@@ -317,7 +345,7 @@ Partial Class Form1
         Me.TabPage2.Location = New System.Drawing.Point(4, 22)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(183, 287)
+        Me.TabPage2.Size = New System.Drawing.Size(183, 416)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Arms"
         Me.TabPage2.UseVisualStyleBackColor = True
@@ -325,9 +353,9 @@ Partial Class Form1
         'ListBox1
         '
         Me.ListBox1.FormattingEnabled = True
-        Me.ListBox1.Location = New System.Drawing.Point(6, 7)
+        Me.ListBox1.Location = New System.Drawing.Point(0, 0)
         Me.ListBox1.Name = "ListBox1"
-        Me.ListBox1.Size = New System.Drawing.Size(169, 277)
+        Me.ListBox1.Size = New System.Drawing.Size(183, 420)
         Me.ListBox1.TabIndex = 0
         '
         'TabPage1
@@ -336,7 +364,7 @@ Partial Class Form1
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(183, 287)
+        Me.TabPage1.Size = New System.Drawing.Size(183, 416)
         Me.TabPage1.TabIndex = 2
         Me.TabPage1.Text = "Legs"
         Me.TabPage1.UseVisualStyleBackColor = True
@@ -346,7 +374,7 @@ Partial Class Form1
         Me.ListBox2.FormattingEnabled = True
         Me.ListBox2.Location = New System.Drawing.Point(0, 0)
         Me.ListBox2.Name = "ListBox2"
-        Me.ListBox2.Size = New System.Drawing.Size(185, 290)
+        Me.ListBox2.Size = New System.Drawing.Size(185, 420)
         Me.ListBox2.TabIndex = 1
         '
         'TabPage3
@@ -355,7 +383,7 @@ Partial Class Form1
         Me.TabPage3.Location = New System.Drawing.Point(4, 22)
         Me.TabPage3.Name = "TabPage3"
         Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage3.Size = New System.Drawing.Size(183, 287)
+        Me.TabPage3.Size = New System.Drawing.Size(183, 416)
         Me.TabPage3.TabIndex = 3
         Me.TabPage3.Text = "Abs"
         Me.TabPage3.UseVisualStyleBackColor = True
@@ -365,7 +393,7 @@ Partial Class Form1
         Me.ListBox3.FormattingEnabled = True
         Me.ListBox3.Location = New System.Drawing.Point(0, 0)
         Me.ListBox3.Name = "ListBox3"
-        Me.ListBox3.Size = New System.Drawing.Size(183, 290)
+        Me.ListBox3.Size = New System.Drawing.Size(183, 420)
         Me.ListBox3.TabIndex = 16
         '
         'TabPage4
@@ -374,7 +402,7 @@ Partial Class Form1
         Me.TabPage4.Location = New System.Drawing.Point(4, 22)
         Me.TabPage4.Name = "TabPage4"
         Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage4.Size = New System.Drawing.Size(183, 287)
+        Me.TabPage4.Size = New System.Drawing.Size(183, 416)
         Me.TabPage4.TabIndex = 4
         Me.TabPage4.Text = "Back"
         Me.TabPage4.UseVisualStyleBackColor = True
@@ -384,12 +412,12 @@ Partial Class Form1
         Me.ListBox4.FormattingEnabled = True
         Me.ListBox4.Location = New System.Drawing.Point(0, 0)
         Me.ListBox4.Name = "ListBox4"
-        Me.ListBox4.Size = New System.Drawing.Size(185, 290)
+        Me.ListBox4.Size = New System.Drawing.Size(185, 420)
         Me.ListBox4.TabIndex = 17
         '
         'TextBox2
         '
-        Me.TextBox2.Location = New System.Drawing.Point(233, 369)
+        Me.TextBox2.Location = New System.Drawing.Point(224, 484)
         Me.TextBox2.Name = "TextBox2"
         Me.TextBox2.Size = New System.Drawing.Size(53, 20)
         Me.TextBox2.TabIndex = 40
@@ -398,7 +426,7 @@ Partial Class Form1
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(310, 401)
+        Me.Label3.Location = New System.Drawing.Point(301, 516)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(24, 13)
         Me.Label3.TabIndex = 46
@@ -407,7 +435,7 @@ Partial Class Form1
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(204, 376)
+        Me.Label1.Location = New System.Drawing.Point(195, 491)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(23, 13)
         Me.Label1.TabIndex = 41
@@ -415,7 +443,7 @@ Partial Class Form1
         '
         'Button2
         '
-        Me.Button2.Location = New System.Drawing.Point(207, 434)
+        Me.Button2.Location = New System.Drawing.Point(211, 578)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(148, 24)
         Me.Button2.TabIndex = 51
@@ -425,7 +453,7 @@ Partial Class Form1
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(310, 376)
+        Me.Label2.Location = New System.Drawing.Point(301, 491)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(24, 13)
         Me.Label2.TabIndex = 42
@@ -434,7 +462,7 @@ Partial Class Form1
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(204, 401)
+        Me.Label4.Location = New System.Drawing.Point(195, 516)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(23, 13)
         Me.Label4.TabIndex = 45
@@ -442,7 +470,7 @@ Partial Class Form1
         '
         'TextBox4
         '
-        Me.TextBox4.Location = New System.Drawing.Point(233, 401)
+        Me.TextBox4.Location = New System.Drawing.Point(224, 516)
         Me.TextBox4.Name = "TextBox4"
         Me.TextBox4.Size = New System.Drawing.Size(53, 20)
         Me.TextBox4.TabIndex = 43
@@ -450,7 +478,7 @@ Partial Class Form1
         '
         'TextBox3
         '
-        Me.TextBox3.Location = New System.Drawing.Point(145, 401)
+        Me.TextBox3.Location = New System.Drawing.Point(136, 516)
         Me.TextBox3.Name = "TextBox3"
         Me.TextBox3.Size = New System.Drawing.Size(53, 20)
         Me.TextBox3.TabIndex = 44
@@ -458,7 +486,7 @@ Partial Class Form1
         '
         'Button3
         '
-        Me.Button3.Location = New System.Drawing.Point(15, 434)
+        Me.Button3.Location = New System.Drawing.Point(19, 578)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(183, 24)
         Me.Button3.TabIndex = 53
@@ -467,14 +495,14 @@ Partial Class Form1
         '
         'ProgressBar1
         '
-        Me.ProgressBar1.Location = New System.Drawing.Point(365, 125)
+        Me.ProgressBar1.Location = New System.Drawing.Point(395, 114)
         Me.ProgressBar1.Name = "ProgressBar1"
         Me.ProgressBar1.Size = New System.Drawing.Size(479, 23)
         Me.ProgressBar1.TabIndex = 54
         '
         'Button4
         '
-        Me.Button4.Location = New System.Drawing.Point(365, 44)
+        Me.Button4.Location = New System.Drawing.Point(395, 33)
         Me.Button4.Name = "Button4"
         Me.Button4.Size = New System.Drawing.Size(59, 71)
         Me.Button4.TabIndex = 55
@@ -484,7 +512,7 @@ Partial Class Form1
         'Label11
         '
         Me.Label11.AutoSize = True
-        Me.Label11.Location = New System.Drawing.Point(362, 614)
+        Me.Label11.Location = New System.Drawing.Point(119, 549)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(157, 13)
         Me.Label11.TabIndex = 56
@@ -495,28 +523,138 @@ Partial Class Form1
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PreferencesToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(853, 24)
+        Me.MenuStrip1.Size = New System.Drawing.Size(879, 24)
         Me.MenuStrip1.TabIndex = 57
         Me.MenuStrip1.Text = "MenuStrip1"
         '
         'PreferencesToolStripMenuItem
         '
-        Me.PreferencesToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.WorkoutDatabaseToolStripMenuItem})
+        Me.PreferencesToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.WorkoutDatabaseToolStripMenuItem, Me.RecentWorkoutsToolStripMenuItem})
         Me.PreferencesToolStripMenuItem.Name = "PreferencesToolStripMenuItem"
         Me.PreferencesToolStripMenuItem.Size = New System.Drawing.Size(80, 20)
         Me.PreferencesToolStripMenuItem.Text = "Preferences"
         '
         'WorkoutDatabaseToolStripMenuItem
         '
+        Me.WorkoutDatabaseToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ChangeDirectoryToolStripMenuItem})
         Me.WorkoutDatabaseToolStripMenuItem.Name = "WorkoutDatabaseToolStripMenuItem"
-        Me.WorkoutDatabaseToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
-        Me.WorkoutDatabaseToolStripMenuItem.Text = "Workout Database"
+        Me.WorkoutDatabaseToolStripMenuItem.Size = New System.Drawing.Size(166, 22)
+        Me.WorkoutDatabaseToolStripMenuItem.Text = "Exercise Database"
+        '
+        'ChangeDirectoryToolStripMenuItem
+        '
+        Me.ChangeDirectoryToolStripMenuItem.Name = "ChangeDirectoryToolStripMenuItem"
+        Me.ChangeDirectoryToolStripMenuItem.Size = New System.Drawing.Size(181, 22)
+        Me.ChangeDirectoryToolStripMenuItem.Text = "* Change directory *"
+        '
+        'RecentWorkoutsToolStripMenuItem
+        '
+        Me.RecentWorkoutsToolStripMenuItem.Name = "RecentWorkoutsToolStripMenuItem"
+        Me.RecentWorkoutsToolStripMenuItem.Size = New System.Drawing.Size(166, 22)
+        Me.RecentWorkoutsToolStripMenuItem.Text = "Recent Workouts"
+        '
+        'Button5
+        '
+        Me.Button5.Location = New System.Drawing.Point(361, 213)
+        Me.Button5.Name = "Button5"
+        Me.Button5.Size = New System.Drawing.Size(28, 27)
+        Me.Button5.TabIndex = 58
+        Me.Button5.Text = "↑"
+        Me.Button5.UseVisualStyleBackColor = True
+        '
+        'Button6
+        '
+        Me.Button6.Location = New System.Drawing.Point(361, 246)
+        Me.Button6.Name = "Button6"
+        Me.Button6.Size = New System.Drawing.Size(28, 27)
+        Me.Button6.TabIndex = 59
+        Me.Button6.Text = "↓"
+        Me.Button6.UseVisualStyleBackColor = True
+        '
+        'Panel2
+        '
+        Me.Panel2.Controls.Add(Me.ProgressBar2)
+        Me.Panel2.Controls.Add(Me.Button7)
+        Me.Panel2.Controls.Add(Me.TextBox5)
+        Me.Panel2.Controls.Add(Me.Button8)
+        Me.Panel2.Controls.Add(Me.Label13)
+        Me.Panel2.Controls.Add(Me.Label14)
+        Me.Panel2.Location = New System.Drawing.Point(36, 635)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Size = New System.Drawing.Size(554, 168)
+        Me.Panel2.TabIndex = 60
+        Me.Panel2.Visible = False
+        '
+        'ProgressBar2
+        '
+        Me.ProgressBar2.Location = New System.Drawing.Point(16, 121)
+        Me.ProgressBar2.Name = "ProgressBar2"
+        Me.ProgressBar2.Size = New System.Drawing.Size(408, 28)
+        Me.ProgressBar2.TabIndex = 64
+        '
+        'Button7
+        '
+        Me.Button7.Location = New System.Drawing.Point(430, 121)
+        Me.Button7.Name = "Button7"
+        Me.Button7.Size = New System.Drawing.Size(106, 28)
+        Me.Button7.TabIndex = 63
+        Me.Button7.Text = "OK"
+        Me.Button7.UseVisualStyleBackColor = True
+        '
+        'TextBox5
+        '
+        Me.TextBox5.Location = New System.Drawing.Point(16, 81)
+        Me.TextBox5.Name = "TextBox5"
+        Me.TextBox5.Size = New System.Drawing.Size(408, 20)
+        Me.TextBox5.TabIndex = 62
+        '
+        'Button8
+        '
+        Me.Button8.Location = New System.Drawing.Point(430, 77)
+        Me.Button8.Name = "Button8"
+        Me.Button8.Size = New System.Drawing.Size(106, 24)
+        Me.Button8.TabIndex = 61
+        Me.Button8.Text = "Browse"
+        Me.Button8.UseVisualStyleBackColor = True
+        '
+        'Label13
+        '
+        Me.Label13.AutoSize = True
+        Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label13.Location = New System.Drawing.Point(13, 62)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(289, 16)
+        Me.Label13.TabIndex = 60
+        Me.Label13.Text = "Choose a folder to store/edit workout exercises:"
+        '
+        'Label14
+        '
+        Me.Label14.AutoSize = True
+        Me.Label14.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label14.Location = New System.Drawing.Point(11, 15)
+        Me.Label14.Name = "Label14"
+        Me.Label14.Size = New System.Drawing.Size(525, 25)
+        Me.Label14.TabIndex = 59
+        Me.Label14.Text = "Looks like you're new, so let's set things up real quick"
+        '
+        'Panel3
+        '
+        Me.Panel3.Controls.Add(Me.Label8)
+        Me.Panel3.Controls.Add(Me.Label7)
+        Me.Panel3.Controls.Add(Me.Label9)
+        Me.Panel3.Location = New System.Drawing.Point(466, 9)
+        Me.Panel3.Name = "Panel3"
+        Me.Panel3.Size = New System.Drawing.Size(305, 119)
+        Me.Panel3.TabIndex = 61
         '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(853, 675)
+        Me.ClientSize = New System.Drawing.Size(879, 613)
+        Me.Controls.Add(Me.Panel2)
+        Me.Controls.Add(Me.Button6)
+        Me.Controls.Add(Me.Button5)
         Me.Controls.Add(Me.Label11)
         Me.Controls.Add(Me.Button4)
         Me.Controls.Add(Me.ProgressBar1)
@@ -536,16 +674,16 @@ Partial Class Form1
         Me.Controls.Add(Me.TextBox4)
         Me.Controls.Add(Me.TextBox3)
         Me.Controls.Add(Me.Panel1)
-        Me.Controls.Add(Me.Label8)
-        Me.Controls.Add(Me.Label7)
         Me.Controls.Add(Me.Button1)
-        Me.Controls.Add(Me.Label9)
         Me.Controls.Add(Me.MenuStrip1)
+        Me.Controls.Add(Me.Panel3)
         Me.MainMenuStrip = Me.MenuStrip1
+        Me.MinimumSize = New System.Drawing.Size(895, 652)
         Me.Name = "Form1"
         Me.Text = "Form1"
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel1.ResumeLayout(False)
+        Me.Panel1.PerformLayout()
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage2.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
@@ -553,6 +691,10 @@ Partial Class Form1
         Me.TabPage4.ResumeLayout(False)
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
+        Me.Panel2.ResumeLayout(False)
+        Me.Panel2.PerformLayout()
+        Me.Panel3.ResumeLayout(False)
+        Me.Panel3.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -599,5 +741,18 @@ Partial Class Form1
     Friend WithEvents MenuStrip1 As System.Windows.Forms.MenuStrip
     Friend WithEvents PreferencesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents WorkoutDatabaseToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents Button5 As System.Windows.Forms.Button
+    Friend WithEvents Button6 As System.Windows.Forms.Button
+    Friend WithEvents Label12 As System.Windows.Forms.Label
+    Friend WithEvents Panel2 As System.Windows.Forms.Panel
+    Friend WithEvents ProgressBar2 As System.Windows.Forms.ProgressBar
+    Friend WithEvents Button7 As System.Windows.Forms.Button
+    Friend WithEvents TextBox5 As System.Windows.Forms.TextBox
+    Friend WithEvents Button8 As System.Windows.Forms.Button
+    Friend WithEvents Label13 As System.Windows.Forms.Label
+    Friend WithEvents Label14 As System.Windows.Forms.Label
+    Friend WithEvents ChangeDirectoryToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents RecentWorkoutsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents Panel3 As System.Windows.Forms.Panel
 
 End Class
